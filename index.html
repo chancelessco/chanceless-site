@@ -79,7 +79,9 @@
 						<div class="content">
 							<p><strong>We don’t do fluff — just progress. </strong> Book a free consultation and let’s get to work.
 </p>
-							<form action="https://formsubmit.co/chanceless82@gmail.com" method="POST"></form>
+							<form id="contact-form" action="https://formsubmit.co/chanceless82@gmail.com" method="POST">
+								<input type="hidden" name="_captcha" value="false"
+
 								<div class="fields">
 									<div class="field half">
 										<input type="text" name="name" id="name" placeholder="Name" />
@@ -95,7 +97,12 @@
 									<li><input type="submit" value="Send Message" class="button primary" /></li>
 								</ul>
 							</form>
+						<div id="thank-you-message" style="display:none;">
+							<p><strong>Thank you for reaching out!</strong> We'll be in touch shortly.</p>
 						</div>
+						
+						</div>
+					
 					</section>
 
 				<!-- Copyright -->
@@ -110,6 +117,32 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+  				const form = document.getElementById('contact-form');
+  				const thankYouMessage = document.getElementById('thank-you-message');
 
+ 				form.addEventListener('submit', function (event) {
+    				event.preventDefault(); // Stop default redirect
+
+    				const formData = new FormData(form);
+
+    				fetch(form.action, {
+      					method: form.method,
+      					body: formData,
+      					headers: {
+        					'Accept': 'application/json'
+     					}
+   					 }).then(response => {
+      					if (response.ok) {
+       				 		form.style.display = 'none';
+        					thankYouMessage.style.display = 'block';
+      					} else {
+        				alert('There was a problem submitting your form. Please try again.');
+      					}
+    				}).catch(error => {
+      					alert('There was a problem submitting your form. Please try again later.');
+    				});
+  				});
+			</script>
 	</body>
 </html>
